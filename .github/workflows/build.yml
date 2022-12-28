@@ -17,3 +17,4 @@ jobs:
       with:
         name: main
         path: src/dist/
+    - run: "ls"
