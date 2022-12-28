@@ -31,7 +31,7 @@ jobs:
         with:
           path: src
       - name: Upload artifacts
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: BootAnimationWindows64.exe
           path: src/dist/windows
