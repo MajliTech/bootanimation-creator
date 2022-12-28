@@ -17,4 +17,5 @@ jobs:
       with:
         name: main
         path: src/dist/
-    - run: "ls"
+    - run: "sudo apt install tree"
+    - run: "tree"
