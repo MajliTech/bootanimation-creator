@@ -1,22 +1,37 @@
 
-name: Package Application with Pyinstaller
+name: "Build executables"
 
 on: [workflow_dispatch]
 
 jobs:
   build-linux:
-
+    name: Build Linux Executable
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - name: "Get source code"
+        uses: actions/checkout@v2
+      - name: "Build executable"
+        uses: JackMcKew/pyinstaller-action-linux@main
+        with:
+          path: src
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: BootAnimationLinux64
+          path: src/dist/linux
+  build-windows:
+    name: "Build Windows Executable"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Get source code"
+        uses: actions/checkout@v2
 
-    - name: Build Linux exec
-      uses: JackMcKew/pyinstaller-action-linux@main
-      with:
-        path: src
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: main
-        path: src/dist/linux
+      - name: "Build executable"
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: src
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: BootAnimationWindows64.exe
+          path: src/dist/windows
