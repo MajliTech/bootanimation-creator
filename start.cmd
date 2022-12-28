@@ -1,0 +1,2 @@
+echo Hi Windows!
+dir
