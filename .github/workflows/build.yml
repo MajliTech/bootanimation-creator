@@ -8,14 +8,30 @@ jobs:
     name: Build Linux Executable
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build Linux exec
+    - name: "Get source code"
+      uses: actions/checkout@v2
+    - name: Build executable
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
         path: src
+    - name: "Upload artifacts"
+      uses: actions/upload-artifact@v2
+      with:
+        name: BootAnimationLinux64
+        path: src/dist/linux
+  build-windows:
+    name: "Build Windows Executable"
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Get source code"
+      uses: actions/checkout@v2
+
+    - name: Build executable
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        path: src
+    - name: Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
-        name: main
-        path: src/dist/
-    - run: "sudo apt install tree"
-    - run: "tree"
+        name: BootAnimationWindows64.exe
+        path: src/dist/windows
