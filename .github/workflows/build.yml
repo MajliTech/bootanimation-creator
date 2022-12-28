@@ -1,0 +1,22 @@
+
+name: Package Application with Pyinstaller
+
+on: [workflow_dispatch]
+
+jobs:
+  build-linux:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Linux exec
+      uses: JackMcKew/pyinstaller-action-linux@main
+      with:
+        path: src
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: main
+        path: src/dist/linux
