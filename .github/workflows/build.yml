@@ -16,4 +16,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: main
-        path: dist/main
+        path: src/dist/main
