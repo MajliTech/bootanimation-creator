@@ -1,5 +1,5 @@
 
-name: Build executables
+name: "Build executables"
 
 on: [workflow_dispatch]
 
