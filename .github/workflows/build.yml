@@ -3,12 +3,5 @@ on:
     
 jobs:
   linux-build:
-    name: Build Linux Exec
-    runs-on: ubuntu-latest
-    steps:
-    - run: "ls"
-  windows-build:
-    name: Build Windows Exec
-    runs-on: windows-latest
-    steps:
-    - run: "dir"
+     name: PyInstaller Linux
+     uses: JackMcKew/pyinstaller-action-linux@0.1.4
