@@ -6,9 +6,9 @@ jobs:
     name: Build Linux Exec
     runs-on: ubuntu-latest
     steps:
-    - run: "build.sh"
+    - run: "./build.sh"
   windows-build:
     name: Build Windows Exec
     runs-on: windows-latest
     steps:
-    - run: "build.cmd"
+    - run: "./build.cmd"
