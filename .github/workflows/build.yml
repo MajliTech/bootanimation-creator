@@ -1,5 +1,5 @@
 
-name: Package Application with Pyinstaller
+name: Build executables
 
 on: [workflow_dispatch]
 
