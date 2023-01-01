@@ -1,5 +1,6 @@
 # BootAnimations Creator 
 Simplicity.
+
 [![Build executables](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml/badge.svg)](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml)
 ## Running
 ### From releases
