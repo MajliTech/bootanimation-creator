@@ -2,6 +2,8 @@
 Simplicity.
 
 [![Build executables](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml/badge.svg)](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml)
+## Dependencies
+Only FFMPEG for now is needed.
 ## Running
 ### From releases
 You can download a binary for your system.
