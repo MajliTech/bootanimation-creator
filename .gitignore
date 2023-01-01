@@ -6,3 +6,5 @@ pyvenv.cfg
 __pycache__
 dist
 build
+bc-tmp
+src/bc-tmp
