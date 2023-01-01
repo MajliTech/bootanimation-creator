@@ -7,7 +7,7 @@ Simplicity.
 You can download a binary for your system.
 currently supported OSes are:
  - Windows x64
- - Linux (may also be macOS x64)
+ - Linux (may also run macOS x64)
 ### Running from source
 If you want to run this from source, you can!
 1. Install Python 3 with PIP (optionally Tkinter).
