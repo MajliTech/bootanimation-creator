@@ -7,7 +7,7 @@ Simplicity.
 You can download a binary for your system.
 currently supported OSes are:
  - Windows x64
- - Linux (may also run macOS x64)
+ - Linux (may also run on macOS x64)
 ### Running from source
 If you want to run this from source, you can!
 1. Install Python 3 with PIP (optionally Tkinter).
@@ -62,14 +62,14 @@ python3 src/main.py
 ```
 ### Build an executable
 1. Follow steps 1-5 from previous guide
-2. Build!
+2. Build
 ```
 pyinstaller src/main.spec
 ```
 3. The executable will be placed in the `src/dist` folder, go pick it up and run it!
 ## FAQ
 ### What is this?
-This is a simple Python script that turns an ffmpeg video into a boot animation. 
+This is a simple Python script that turns an ffmpeg video into a boot animation. Soon it will also pickup some PNG series.
 ### Why was this created?
 I didn't discover any tools that would do this, so I decided to make one.
 
