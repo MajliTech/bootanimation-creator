@@ -87,7 +87,7 @@ def add_part():
     #     else:
     #         prform(INFO,"Not including audio for this part.")
     #         part["path"] = [p,None]
-    # return part
+    return part
 # Clean terminal for us
 print("\n"*os.get_terminal_size()[1])
 print (u"{}[2J{}[;H".format(chr(27), chr(27)), end="")
@@ -184,7 +184,12 @@ try:
     prform(INFO,"1/3: Generate desc.txt")
     libba.gen_desc(animations,specs)
     prform(INFO,"2/3: Copy media to bc-tmp (or decode to PNGs)")
-    libba.decode_media(animations,specs)
+    try:
+        libba.decode_media(animations,specs)
+    except ValueError as e: 
+        prform(ERR,"I'm sorry, but there was an error decoding and copying the media to bc-tmp folder.")
+        prform(ERR,"Short traceback: "+e)
+        prform(ERR,"Full traceback: "+e.with_traceback())
     prform(INFO,"3/3: Pack to zip and remove Temp Folder")
     libba.pack_zip(loc)
     prform("CONG", "Your boot animations is complete!")
