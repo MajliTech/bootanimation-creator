@@ -87,7 +87,7 @@ def add_part():
     #     else:
     #         prform(INFO,"Not including audio for this part.")
     #         part["path"] = [p,None]
-    # return part
+    return part
 # Clean terminal for us
 print("\n"*os.get_terminal_size()[1])
 print (u"{}[2J{}[;H".format(chr(27), chr(27)), end="")
