@@ -178,8 +178,8 @@ try:
     yea = prinp(QUES, "Do you want to add more parts?")
     if yea.lower()=="y":
             animations.append(add_part())
-    if tk: loc = easygui.filesavebox(default="bootanimation",msg="Save ZIP (without .zip, this will be automatically added)")
-    else: loc = prinp(QUES,"Enter location of ZIP (without .zip, this will be automatically added)")
+    if tk: loc = easygui.filesavebox(default="bootanimation",msg="Save ZIP",filetypes=[".zip"])
+    else: loc = prinp(QUES,"Enter location of ZIP")
     prform(INFO,"Starting animation creation...")
     prform(INFO,"1/3: Generate desc.txt")
     libba.gen_desc(animations,specs)

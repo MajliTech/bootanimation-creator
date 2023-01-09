@@ -8,10 +8,13 @@ import os
 import subprocess
 import shlex
 import json
+import zip
 import shutil
+
 
 try:
     os.mkdir("bc-tmp")
+    os.mkdir("bc-tmp/bootanim")
 except:
     pass
 def check_ffmpeg():
@@ -38,7 +41,7 @@ def gen_desc(animations: list, specs: dict):
     for i in animations:
         appe = f"{i['type']} {i['count']} {i['delay']} part{i['part']}\n"
         parts += appe
-    with open("bc-tmp/desc.txt","w") as f:
+    with open("bc-tmp/bootanim/desc.txt","w") as f:
         f.write(header)
         f.write(parts)
         f.close()
@@ -51,20 +54,24 @@ def decode_media(animations: list, specs: dict):
             if not res[1] == specs["height"]:
                 raise ValueError("Video size mismatch")
             try:
-                os.mkdir("bc-tmp/part{}".format(i["part"]))
+                os.mkdir("bc-tmp/bootanim/part{}".format(i["part"]))
             except:
-                shutil.rmtree("bc-tmp/part{}".format(i["part"]))
-                os.mkdir("bc-tmp/part{}".format(i["part"]))
-            cmd = "ffmpeg -i \"{0}\" bc-tmp/part{1}/%04d.png".format(
+                shutil.rmtree("bc-tmp/bootanim/part{}".format(i["part"]))
+                os.mkdir("bc-tmp/bootanim/part{}".format(i["part"]))
+            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/%04d.png".format(
                 i["path"][0], i["part"]
             )
             s = subprocess.getstatusoutput(cmd)
             if s[0] != 0:
                 raise OSError("Error executing ffmpeg command: Exited with code {}".format(s[0]))
-            cmd = "ffmpeg -i \"{0}\" bc-tmp/part{1}/audio.wav".format(i["path"][0], i["part"]            )
+            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/audio.wav".format(i["path"][0], i["part"]            )
             s = subprocess.getstatusoutput(cmd)
 def pack_zip(file: str,deltemp: bool = True):
-    shutil.make_archive(file, 'zip', "bc-tmp")
+    zip = zipfile.ZipFile(file,mode="w")
+    for i in os.walk("bc-tmp/bootanim"):
+        zip.write(i)
+    zip.close()
+    # shutil.make_archive("bc-temp/bootanim", 'zip', "bc-tmp")
     if deltemp: shutil.rmtree("bc-tmp")
 def find_vid_res(pathToInputVideo):
     cmd = "ffprobe -v quiet -print_format json -show_streams"
