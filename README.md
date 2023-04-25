@@ -27,6 +27,7 @@ Windows:
     Download a package from https://www.python.org/
 
 2. Install git
+
 Ubuntu:
 ```sh
 sudo apt install git
