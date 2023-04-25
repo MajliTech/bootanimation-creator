@@ -128,7 +128,8 @@ animations = []
 # {'type': 'p', 'count': 0, 'delay': 0, 'part': 0, 'ffmpeg': True, 'path': ['/home/majlitech/Downloads/y2mate.com - konczysz technikum idziesz na studia D_360p.mp4', '/home/majlitech/Downloads/y2mate.com - konczysz technikum idziesz na studia D_360p.mp4']}
 try:
     import tkinter as tk
-except ImportError:
+    tk.Tk()
+except:
     tk = None
 
 print(Fore.RED+"❊ BootAnimation Creator")
@@ -188,7 +189,7 @@ try:
         libba.decode_media(animations,specs)
     except ValueError as e: 
         prform(ERR,"I'm sorry, but there was an error decoding and copying the media to bc-tmp folder.")
-        prform(ERR,"Short traceback: "+e)
+        prform(ERR,"Short traceback: "+str(e))
         prform(ERR,"Full traceback: "+e.with_traceback())
     prform(INFO,"3/3: Pack to zip and remove Temp Folder")
     libba.pack_zip(loc)
