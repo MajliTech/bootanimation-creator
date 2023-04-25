@@ -8,7 +8,7 @@ import os
 import subprocess
 import shlex
 import json
-import zip
+import zipfile
 import shutil
 
 
