@@ -3,18 +3,18 @@ Simplicity.
 
 [![Build executables](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml/badge.svg)](https://github.com/MajliTech/bootanimation-creator/actions/workflows/build.yml)
 ## Dependencies
-Only FFMPEG for now is needed.
+FFmpeg if you plan on decoding video files. If you already have a WAV file and series of PNGs you don't need anything.
 ## Running
 ### From releases
 You can download a binary for your system.
 currently supported OSes are:
  - Windows x64
- - Linux (may also run on macOS x64)
+ - Linux x64 (may or may not also run on macOS x64)
 ### Running from source
 If you want to run this from source, you can!
 1. Install Python 3 with PIP (optionally Tkinter).
 
-Ubuntu:
+Debian:
 ```bash
 apt install python3 python3-pip
 # Optional
@@ -28,7 +28,7 @@ Windows:
 
 2. Install git
 
-Ubuntu:
+Debian:
 ```sh
 sudo apt install git
 ```
@@ -59,7 +59,7 @@ python3 -m venv .
 python3 -m pip install -r src/requirements.txt
 ```
 6. Run!
-```
+```sh
 python3 src/main.py
 #Again, on windows, you might need to remove the 3 extension in case it is asking for install from MS Store
 ```
@@ -72,7 +72,7 @@ pyinstaller src/main.spec
 3. The executable will be placed in the `src/dist` folder, go pick it up and run it!
 ## FAQ
 ### What is this?
-This is a simple Python script that turns an ffmpeg video into a boot animation. Soon it will also pickup some PNG series.
+This is a simple Python script that turns an ffmpeg video or png series into an Android boot animation. 
 ### Why was this created?
 I didn't discover any tools that would do this, so I decided to make one.
 
