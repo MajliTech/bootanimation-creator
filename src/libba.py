@@ -64,6 +64,16 @@ def decode_media(animations: list, specs: dict):
                 raise OSError("Error executing ffmpeg command: Exited with code {}".format(s[0]))
             cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/audio.wav".format(i["path"][0], i["part"])
             s = subprocess.getstatusoutput(cmd)
+        else:
+            try:
+                shutil.rmtree("bc-tmp/bootanim/part{}".format(i["part"]))
+            except:
+                pass
+            shutil.copytree(i["path"][0],f"bc-tmp/bootanim/part{i['part']}")
+            if str(i['path'][1]).endswith(".wav"):
+                shutil.copy(i["path"][1],f"bc-tmp/bootanim/part{i['part']}/audio.wav")
+            else: 
+                if i['path']['1']: print(f"libba: The specified audio file for part {i['part']} is invalid ({i['path'][1]}). Please choose a file ending with .wav.\nlibba: Skipping audio file for part nr {i['part']}")
 def pack_zip(file, deltemp=True):
     with zipfile.ZipFile(file, "w", compresslevel=zipfile.ZIP_DEFLATED) as zip_file:
         for root, dirs, files in os.walk("bc-tmp/bootanim"):

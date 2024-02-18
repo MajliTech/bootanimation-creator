@@ -1,3 +1,4 @@
 colorama
 crossfiledialog
 ffmpeg
+pillow

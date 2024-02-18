@@ -14,6 +14,7 @@ import os
 import crossfiledialog
 import libba
 import time
+from PIL import Image 
 
 #Initalize
 colorama.init()
@@ -25,6 +26,22 @@ INFO = "INFO"
 QUES = "QUES"
 ERR = "ERR"
 WARN = "WARN"
+def check_missing_frames(directory):
+  global specs
+  for i in os.listdir(directory):
+    if not i.endswith(".png"): return [False,f"File {i} in directory doesn't follow the naming convention"]
+  filenames = [f for f in os.listdir(directory) if f.endswith(".png")]
+  filenames.sort()
+  last_number = int(filenames[0].split(".")[0])
+  for filename in filenames[1:]:
+    number = int(filename.split(".")[0])
+    img=Image.open(os.path.join(directory,filename))
+    wid, hgt = img.size
+    if specs["height"] != wid or specs["width"] != hgt: return [False,f"Incorrect size in {filename}: should be {specs['height']}x{specs['width']} while being {wid}x{hgt}"]
+    if number != last_number + 1:
+      return [False,f"Missing frame nr {last_number + 1}"]
+    last_number = number
+  return [True,None]
 def add_part():
     # The specs say that there are 3 types of parts:
     """
@@ -65,10 +82,11 @@ def add_part():
     part["part"] = 0
     prform("INFO","Possible media types are:")
     while True:
-        print(Fore.LIGHTRED_EX+" - png (soon): a series of PNG images. They must be named number by number (0000.png, 0001.png, 0002.png, ...)"+Fore.RESET)
+        print(" - png: a series of PNG images. They must be named number by number (0000.png, 0001.png, 0002.png, ...)"+Fore.RESET)
         print(" - ffmpeg: Files will be decoded from ffmpeg to png and audio format. You can specify whatever file as long as FFmpeg supports it.")
         med = prinp(QUES, "Which type of media do you want to add to your boot animation?")
         if med=="ffmpeg": break
+        if med=="png": break
         prform("ERR","Invalid media type! Use the tips bellow.")
     if med=="ffmpeg":
         part["ffmpeg"] = True
@@ -76,17 +94,22 @@ def add_part():
         else: p = prinp(QUES,"Please provide a path to the video:")
         part["path"] = [p,p]
     else:
-        prform(ERR, "Soon!")
-    #     part["ffmpeg"] = False
-    #     if tk: p = easygui.diropenbox()
-    #     else: p = prinp(QUES,"Please provide a path to the folder:")
-    #     if prinp("QUES","Would you also like to include WAV for this part? (Y/N)").lower()=="y":
-    #         if tk: a = easygui.fileopenbox(filetypes=["*.wav"])
-    #         else: p = prinp(QUES,"Please provide a path to the audio:")
-    #         part["path"] = [p,a]
-    #     else:
-    #         prform(INFO,"Not including audio for this part.")
-    #         part["path"] = [p,None]
+        part["ffmpeg"] = False
+        if tk: p = crossfiledialog.choose_folder("Select folder with pictures")
+        else: p = prinp(QUES,"Please provide a path to the folder:")
+        test = check_missing_frames(p)
+        if not test[0]:
+            prform("ERR","Test for the folder failed:")
+            prform("ERR",test[1])
+            raise SystemExit
+        if prinp("QUES","Would you also like to include WAV for this part? (Y/N)").lower()=="y":
+            if tk: a = crossfiledialog.open_file(filter=["*.wav"])
+            else: p = prinp(QUES,"Please provide a path to the audio:")
+            part["path"] = [p,a]
+        else:
+            prform(INFO,"Not including audio for this part.")
+            part["path"] = [p,None]
+        
     return part
 # Clean terminal for us
 print("\n"*os.get_terminal_size()[1])
@@ -130,11 +153,6 @@ try:
 except:
     tk = None
 
-print(Fore.RED+"❊ BootAnimation Creator")
-print(Fore.GREEN+"❊ by MajliTech")
-if not libba.check_ffmpeg(): 
-    prform(WARN, "ffmpeg was not detected. Please CTRL+C in 10 seconds to cancel program's startup.")
-    prform(INFO, "FFmpeg is being used when converting videos to boot animations. \n   - If you already have your animation in PNG series you can safely ignore this warning.")
     try:
         time.sleep(10)
     except:
