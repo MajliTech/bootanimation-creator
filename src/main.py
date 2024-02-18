@@ -91,8 +91,6 @@ def add_part():
 # Clean terminal for us
 print("\n"*os.get_terminal_size()[1])
 print (u"{}[2J{}[;H".format(chr(27), chr(27)), end="")
-# print("\033c",end="")
-# clear()
 #A simple function which prints out formatted string with color and what is it.
 def prform(which:str, string:str):
     INFO = Fore.BLUE+"i "+Fore.WHITE
