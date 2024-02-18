@@ -11,7 +11,7 @@
 #Libraries
 import colorama
 import os
-import easygui
+import crossfiledialog
 import libba
 import time
 
@@ -72,7 +72,7 @@ def add_part():
         prform("ERR","Invalid media type! Use the tips bellow.")
     if med=="ffmpeg":
         part["ffmpeg"] = True
-        if tk: p = easygui.fileopenbox()
+        if tk: p = crossfiledialog.open_file(title="Open a video file")
         else: p = prinp(QUES,"Please provide a path to the video:")
         part["path"] = [p,p]
     else:
@@ -128,7 +128,7 @@ animations = []
 # {'type': 'p', 'count': 0, 'delay': 0, 'part': 0, 'ffmpeg': True, 'path': ['/home/majlitech/Downloads/y2mate.com - konczysz technikum idziesz na studia D_360p.mp4', '/home/majlitech/Downloads/y2mate.com - konczysz technikum idziesz na studia D_360p.mp4']}
 try:
     import tkinter as tk
-    tk.Tk()
+    tk.Tk().destroy()
 except:
     tk = None
 
@@ -179,7 +179,7 @@ try:
     yea = prinp(QUES, "Do you want to add more parts?")
     if yea.lower()=="y":
             animations.append(add_part())
-    if tk: loc = easygui.filesavebox(default="bootanimation",msg="Save ZIP",filetypes=[".zip"])
+    if tk: loc = crossfiledialog.save_file(title="Save ZIP as")
     else: loc = prinp(QUES,"Enter location of ZIP")
     prform(INFO,"Starting animation creation...")
     prform(INFO,"1/3: Generate desc.txt")
