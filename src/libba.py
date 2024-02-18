@@ -58,20 +58,24 @@ def decode_media(animations: list, specs: dict):
             except:
                 shutil.rmtree("bc-tmp/bootanim/part{}".format(i["part"]))
                 os.mkdir("bc-tmp/bootanim/part{}".format(i["part"]))
-            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/%04d.png".format(
-                i["path"][0], i["part"]
-            )
+            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/%04d.png".format(i["path"][0], i["part"])
             s = subprocess.getstatusoutput(cmd)
+            print(s[1])
             if s[0] != 0:
                 raise OSError("Error executing ffmpeg command: Exited with code {}".format(s[0]))
-            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/audio.wav".format(i["path"][0], i["part"]            )
+            cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/audio.wav".format(i["path"][0], i["part"])
             s = subprocess.getstatusoutput(cmd)
-def pack_zip(file: str,deltemp: bool = True):
-    zip = zipfile.ZipFile(file,mode="w")
-    for i in os.listdir("bc-tmp/bootanim"):
-        zip.write(os.path.join("bc-tmp/bootanim",i),arcname=i)
-    zip.close()
-    # shutil.make_archive("bc-temp/bootanim", 'zip', "bc-tmp")
+def pack_zip(file, deltemp=False):
+    with zipfile.ZipFile(file, "w", compresslevel=zipfile.ZIP_DEFLATED) as zip_file:
+        for root, dirs, files in os.walk("bc-tmp/bootanim"):
+            base_dir = os.path.relpath(root, "bc-tmp/bootanim")
+            for filename in files:
+                file_path = os.path.join(root, filename)
+                arcname = os.path.join(base_dir, filename)
+                zip_file.write(file_path, arcname=arcname)
+    if deltemp:
+        shutil.rmtree("bc-tmp/bootanim")
+
     if deltemp: shutil.rmtree("bc-tmp")
 def find_vid_res(pathToInputVideo):
     cmd = "ffprobe -v quiet -print_format json -show_streams"
