@@ -68,8 +68,8 @@ def decode_media(animations: list, specs: dict):
             s = subprocess.getstatusoutput(cmd)
 def pack_zip(file: str,deltemp: bool = True):
     zip = zipfile.ZipFile(file,mode="w")
-    for i in os.walk("bc-tmp/bootanim"):
-        zip.write(i)
+    for i in os.listdir("bc-tmp/bootanim"):
+        zip.write(os.path.join("bc-tmp/bootanim",i),arcname=i)
     zip.close()
     # shutil.make_archive("bc-temp/bootanim", 'zip', "bc-tmp")
     if deltemp: shutil.rmtree("bc-tmp")
