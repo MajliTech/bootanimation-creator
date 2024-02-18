@@ -60,12 +60,11 @@ def decode_media(animations: list, specs: dict):
                 os.mkdir("bc-tmp/bootanim/part{}".format(i["part"]))
             cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/%04d.png".format(i["path"][0], i["part"])
             s = subprocess.getstatusoutput(cmd)
-            print(s[1])
             if s[0] != 0:
                 raise OSError("Error executing ffmpeg command: Exited with code {}".format(s[0]))
             cmd = "ffmpeg -i \"{0}\" bc-tmp/bootanim/part{1}/audio.wav".format(i["path"][0], i["part"])
             s = subprocess.getstatusoutput(cmd)
-def pack_zip(file, deltemp=False):
+def pack_zip(file, deltemp=True):
     with zipfile.ZipFile(file, "w", compresslevel=zipfile.ZIP_DEFLATED) as zip_file:
         for root, dirs, files in os.walk("bc-tmp/bootanim"):
             base_dir = os.path.relpath(root, "bc-tmp/bootanim")
