@@ -26,7 +26,9 @@ jobs:
     steps:
       - name: "Get source code"
         uses: actions/checkout@v2
-
+      - name: "Append pywin32 to requirements"
+        run: printf "\npywin32\n" >> src/requirements.txt
+      - name: Install pywin32
       - name: "Build executable"
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
