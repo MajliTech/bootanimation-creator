@@ -65,11 +65,12 @@ python3 src/main.py
 ```
 ### Build an executable
 1. Follow steps 1-5 from previous guide
-2. Build
+2. If you have created a venv for this build, install Pyinstaller: `pip install pyinstaller`
+3. Build
 ```
 pyinstaller src/main.spec
 ```
-3. The executable will be placed in the `src/dist` folder, go pick it up and run it!
+4. The executable will be placed in the `src/dist` folder, go pick it up and run it!
 ## FAQ
 ### What is this?
 This is a simple Python script that turns an ffmpeg video or png series into an Android boot animation. 
