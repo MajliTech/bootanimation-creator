@@ -57,7 +57,7 @@ def add_part():
     typecor = False
     prform(INFO, "The possible types are:")
     while True:
-        print(" - p - This part wil play, but will stop when boot ended")
+        print(" - p - This part will play, but will stop when boot ended")
         print(" - c - this part will play, no matter what happens")
         typ = prinp(QUES, "What type the first part should be?")
         if typ=="c" or typ=="p": break
