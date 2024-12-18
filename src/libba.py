@@ -73,7 +73,7 @@ def decode_media(animations: list, specs: dict):
             if str(i['path'][1]).endswith(".wav"):
                 shutil.copy(i["path"][1],f"bc-tmp/bootanim/part{i['part']}/audio.wav")
             else: 
-                if i['path']['1']: print(f"libba: The specified audio file for part {i['part']} is invalid ({i['path'][1]}). Please choose a file ending with .wav.\nlibba: Skipping audio file for part nr {i['part']}")
+                if i['path'][1]: print(f"libba: The specified audio file for part {i['part']} is invalid ({i['path'][1]}). Please choose a file ending with .wav.\nlibba: Skipping audio file for part nr {i['part']}")
 def pack_zip(file, deltemp=True):
     with zipfile.ZipFile(file, "w", compresslevel=zipfile.ZIP_DEFLATED) as zip_file:
         for root, dirs, files in os.walk("bc-tmp/bootanim"):
