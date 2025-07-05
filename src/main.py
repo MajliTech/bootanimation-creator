@@ -216,8 +216,8 @@ try:
         except:
             prform("ERR", "This isn't vaild FPS number.")
     # We're done here. Let's add it to the specs:
-    specs["width"] = res[1]
-    specs["height"] = res[0]
+    specs["width"] = res[0]
+    specs["height"] = res[1]
     specs["fps"] = fps
 
     # The string says it all.
