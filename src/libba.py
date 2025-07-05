@@ -45,6 +45,7 @@ def gen_desc(animations: list, specs: dict):
         f.write(header)
         f.write(parts)
         f.close()
+        
 def decode_media(animations: list, specs: dict):
     for i in animations:
         if i["ffmpeg"] == True:
@@ -74,6 +75,7 @@ def decode_media(animations: list, specs: dict):
                 shutil.copy(i["path"][1],f"bc-tmp/bootanim/part{i['part']}/audio.wav")
             else: 
                 if i['path'][1]: print(f"libba: The specified audio file for part {i['part']} is invalid ({i['path'][1]}). Please choose a file ending with .wav.\nlibba: Skipping audio file for part nr {i['part']}")
+
 def pack_zip(file, deltemp=True):
     with zipfile.ZipFile(file, "w", compresslevel=zipfile.ZIP_DEFLATED) as zip_file:
         for root, dirs, files in os.walk("bc-tmp/bootanim"):
@@ -86,6 +88,7 @@ def pack_zip(file, deltemp=True):
         shutil.rmtree("bc-tmp/bootanim")
 
     if deltemp: shutil.rmtree("bc-tmp")
+
 def find_vid_res(pathToInputVideo):
     cmd = "ffprobe -v quiet -print_format json -show_streams"
     args = shlex.split(cmd)
@@ -96,7 +99,6 @@ def find_vid_res(pathToInputVideo):
     width = ffprobeOutput["streams"][0]["width"]
 
     return [int(height), int(width)]
-
 
 
 if __name__ == "__main__":
