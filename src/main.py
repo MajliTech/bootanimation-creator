@@ -16,7 +16,7 @@ import libba
 import time
 from PIL import Image
 
-# Initalize
+# Initialize
 colorama.init()
 Fore = colorama.Fore
 Back = colorama.Back
@@ -28,7 +28,7 @@ ERR = "ERR"
 WARN = "WARN"
 
 
-def check_missing_frames(directory):
+def check_missing_frames(directory: str) -> [bool, str | None]:
     global specs
     for i in os.listdir(directory):
         if not i.endswith(".png"): return [False, f"File {i} in directory doesn't follow the naming convention"]
@@ -47,7 +47,7 @@ def check_missing_frames(directory):
     return [True, None]
 
 
-def add_part():
+def add_part() -> dict:
     # The specs say that there are 3 types of parts:
     """
     p -- this part will play unless interrupted by the end of the boot
@@ -68,7 +68,7 @@ def add_part():
         prform("ERR", " Invalid type! Try using the tips below.")
     part["type"] = typ
     while True:
-        cnt = prinp(QUES, "How many times should this part be repeated?", "1")
+        cnt = prinp(QUES, "How many times should this part be repeated?", "3")
         try:
             cnt = int(cnt)
             break
@@ -114,7 +114,8 @@ def add_part():
             raise SystemExit
         if prinp("QUES", "Would you like to optimize the images? (y/n)", "y").lower() == "y":
             q = prinp("QUES", "Choose quality:", "80")
-            optimize_image(p, q)
+            c = prinp("QUES", "Choose color depth: [0 - skip, 2, 4, 8...]", "256")
+            optimize_image(p, int(q), int(c))
             prform(INFO, "Png files optimized")
         if prinp("QUES", "Would you also like to include WAV for this part? (y/n)", "n").lower() == "y":
             if tk:
@@ -129,7 +130,7 @@ def add_part():
 
 
 # A simple function which prints out formatted string with color and what is it.
-def prform(which: str, string: str):
+def prform(which: str, string: str) -> str | None:
     INFO = Fore.BLUE + "i " + Fore.WHITE
     QUES = Fore.MAGENTA + "? " + Fore.WHITE
     ERR = Fore.RED + "X " + Fore.WHITE
@@ -159,12 +160,14 @@ def prinp(which: str, string: str, default: str):
         return input(QUES + Style.BRIGHT + string + " default: [" + default + "]" + Style.NORMAL + " >> ") or default
 
 
-def optimize_image(directory, quality):
+def optimize_image(directory: str, quality: int, colors: int) -> None:
     # Image optimization for pngs.
     filenames = [f for f in os.listdir(directory) if f.endswith(".png")]
-    for filename in filenames[1:]:
+    for filename in filenames:
         path = os.path.join(directory, filename)
         img = Image.open(path)
+        if colors > 0:
+            img = img.convert("P", palette=Image.ADAPTIVE, colors=colors)
         img.save(path, optimize=True, quality=quality)
 
 
@@ -196,7 +199,8 @@ prform(INFO, "Value below should be declared like this: WIDTHxHEIGHT, for exampl
 correct = False
 # Handle ^C
 try:
-    # Let's initalize the ZIP's desc.txt file
+    # Let's initialize the ZIP's desc.txt file
+    res = []
     while not correct:
         res = prinp(QUES, "What resolution is your animation?", "1080x1920")
         try:
@@ -214,7 +218,7 @@ try:
             fps = int(fps)
             break
         except:
-            prform("ERR", "This isn't vaild FPS number.")
+            prform("ERR", "This isn't valid FPS number.")
     # We're done here. Let's add it to the specs:
     specs["width"] = res[1]
     specs["height"] = res[0]
@@ -243,7 +247,7 @@ try:
     except ValueError as e:
         prform(ERR, "I'm sorry, but there was an error decoding and copying the media to bc-tmp folder.")
         prform(ERR, "Short traceback: " + str(e))
-        prform(ERR, "Full traceback: " + e.with_traceback())
+        prform(ERR, "Full traceback: " + str(e.with_traceback()))
     prform(INFO, "3/3: Pack to zip and remove Temp Folder")
     libba.pack_zip(loc)
     prform("CONG", "Your boot animations is complete!")

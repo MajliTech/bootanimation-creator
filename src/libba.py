@@ -36,7 +36,7 @@ def check_ffmpeg():
 
 # {"width": 1080, "height": 1920, "fps":30}
 def gen_desc(animations: list, specs: dict):
-    header = f"{specs['width']} {specs['height']} {specs['fps']}\n"
+    header = f"{specs['height']} {specs['width']} {specs['fps']}\n"
     parts = ""
     for i in animations:
         appe = f"{i['type']} {i['count']} {i['delay']} part{i['part']}\n"
