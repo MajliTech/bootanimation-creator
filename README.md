@@ -1,3 +1,9 @@
+# Moved over to codeberg
+
+Check out the new place where the repo lives: https://codeberg.org/techus/bootanimation-creator
+
+---
+
 # BootAnimations Creator 
 Simplicity.
 ### What is this?
